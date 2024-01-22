@@ -1,0 +1,74 @@
+---
+title: "HW1 Group Part"
+author: "Group 9 Kasturi Pal, Deepanshu Kataria, Alan Chen, Ssu Hsien Lee"
+output: pdf_document
+---
+
+# HW1 Group Part
+## Procedure
+To help Company XYZ deeply understand their clients’ spending patterns, we decided to leverage R to do the cluster analysis.
+
+For the cluster analysis, we first normalize the annual spending of the six different products to make sure all attributes of the data take value from the same range.
+
+Then we choose the Hierarchical Clustering to form our clusters. While applying the Hierarchical Clustering, we use the Euclidean method calculating the distance matrix to find clusters that are nearest to each other.
+
+From the dendrogram showing the Hierarchical Clustering output, we decided to cut the trees into four parts, showing four clusters in the end. \
+
+Import packages
+```{r, message=FALSE,warning=FALSE}
+library(stats)
+library(dplyr)
+library(cluster)
+library(ggplot2)
+```
+
+```{r}
+Wholesale_customers = read.csv("Wholesale customers data.csv")
+```
+
+Normalize the data
+```{r}
+normalize = function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+## just adding new columns 
+Wholesale_customers_normalized = Wholesale_customers %>% 
+  mutate_at(c(3:8), normalize)
+```
+
+Euclidean Distance method
+```{r}
+distance_matrix = dist(Wholesale_customers_normalized[,3:8], method = "euclidean")
+## View(as.matrix(distance_matrix))
+```
+
+Ward's method 
+```{r}
+hierarchical_ward = hclust(distance_matrix, method = "ward.D")
+plot(hierarchical_ward, labels = Wholesale_customers_normalized$Name)
+```
+
+### k = 4 (other choice?)
+```{r}
+plot(hierarchical_ward)
+rect.hclust(hierarchical_ward, k = 4) 
+```
+
+###  showing the 4-cluster solution!
+```{r}
+Wholesale_customers_normalized$cluster = cutree(hierarchical_ward, k = 4)
+# let's check out cluster centroids
+Wholesale_customers_normalized %>% group_by(cluster) %>%
+  summarise_at(c(3:8), mean)
+
+Wholesale_customers_normalized %>% group_by(cluster) %>%
+  summarise_at(c(3:8), sum)
+```
+
+```{r}
+write.csv(Wholesale_customers_normalized, "Wholesale_customers_normalized.csv", row.names=FALSE)
+```
+
+
+
