@@ -1,4 +1,4 @@
-# Wholesale_Customer_Data_Analysis
+# Clustering Analysis of Wholesale Customer Data 
 
 ### Project Introduction
 Company XYZ is a wholesale distributor that serves several business clients in Portugal. The management team of XYZ would like to get a deeper understanding of the spending patterns of their clients so that the team can make strategic decisions to meet the client’s demands better and improve inventory management.
