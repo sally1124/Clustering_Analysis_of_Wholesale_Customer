@@ -18,7 +18,7 @@ The following are the descriptions of the columns:
 * Detergents_Paper: Annual spending on detergents and paper products.
 * Delicatessen: Annual spending on deli products.
 
-# Solution Procedure
+# Resolution Process
 1. **Data preprocess**: Normalize the annual spending across the six different products to ensure consistency in the range of all data attributes.
 2. **Clustering analysis**: Utilize Hierarchical Clustering with the Euclidean distance matrix method to form meaningful clusters based on the normalized data.
 3. **Data visualization**: Employ Tableau to visually represent the clustering results, providing an intuitive and insightful display of the identified clusters.
